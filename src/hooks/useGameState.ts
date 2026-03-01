@@ -129,15 +129,9 @@ export function useGameState() {
         let newState = { ...prev };
         let changed = false;
 
-        // 1. Auto Gather
+        // 1. Auto Gather (NO XP GAIN)
         if (prev.upgrades.autoGather > 0) {
-          const gatherAmount = prev.upgrades.autoGather;
-          newState.dewdrops += gatherAmount;
-          const xpGain = gatherAmount * 0.5; // Gain 0.5 XP per auto-gathered drop
-          const { xp, level, evolution } = calculateLevelAndXp(newState.xp + xpGain, newState.level);
-          newState.xp = xp;
-          newState.level = level;
-          newState.evolution = evolution;
+          newState.dewdrops += prev.upgrades.autoGather;
           changed = true;
         }
 

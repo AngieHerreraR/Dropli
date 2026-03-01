@@ -28,6 +28,13 @@ export default function EvolutionAnimation({ level, isEvolution, onComplete }: P
     };
   }, [isEvolution, onComplete]);
 
+  // Fallback to allow clicking to dismiss if it gets stuck
+  const handleContainerClick = () => {
+    if (!isEvolution || phase === 'reveal') {
+      onComplete();
+    }
+  };
+
   const particles = Array.from({ length: 36 });
 
   const oldScale = level === 5 ? 1 : 1.2;
@@ -64,7 +71,8 @@ export default function EvolutionAnimation({ level, isEvolution, onComplete }: P
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="absolute inset-0 z-[100] flex items-center justify-center bg-slate-900 overflow-hidden"
+      onClick={handleContainerClick}
+      className="absolute inset-0 z-[100] flex items-center justify-center bg-slate-900 overflow-hidden cursor-pointer"
     >
       {/* Background rotating rays */}
       <motion.div
@@ -159,7 +167,7 @@ export default function EvolutionAnimation({ level, isEvolution, onComplete }: P
         <div className="relative z-40 flex flex-col items-center mt-48">
           <motion.div
             initial={{ scale: 0.5, y: 50, opacity: 0 }}
-            animate={{ scale: [0.5, 1.2, 1], y: 0, opacity: 1 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 12, stiffness: 200, delay: 0.3 }}
             className="text-center"
           >
