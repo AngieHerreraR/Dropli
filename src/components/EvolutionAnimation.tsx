@@ -28,38 +28,33 @@ export default function EvolutionAnimation({ level, isEvolution, onComplete }: P
     };
   }, [isEvolution, onComplete]);
 
-  // Fallback to allow clicking to dismiss if it gets stuck
+  // Allow clicking to skip/dismiss at any time
   const handleContainerClick = () => {
-    if (!isEvolution || phase === 'reveal') {
-      onComplete();
-    }
+    onComplete();
   };
 
   const particles = Array.from({ length: 36 });
 
-  const oldScale = level === 5 ? 1 : 1.2;
-  const newScale = level === 5 ? 1.2 : 1.4;
+  const oldScale = level === 6 ? 1 : 1.2;
+  const newScale = level === 6 ? 1.2 : 1.4;
 
+  // Ensure arrays have exactly the same length (14 elements) to prevent Framer Motion errors
   const morphScales = [
     oldScale, oldScale,
-    0.5, newScale, 0.5,
-    oldScale, 0.5, newScale, 0.5,
-    oldScale, 0.5, newScale, 0.5,
-    oldScale, 0.5, newScale, 0.5,
-    newScale
+    0.5, newScale, 0.5, oldScale,
+    0.5, newScale, 0.5, oldScale,
+    0.5, newScale, 0.5, newScale
   ];
   
   const morphTimes = [
-    0, 0.22,
-    0.3, 0.37, 0.44,
-    0.5, 0.56, 0.62, 0.68,
-    0.73, 0.78, 0.83, 0.88,
-    0.92, 0.96, 0.98, 1
+    0, 0.2,
+    0.3, 0.4, 0.5, 0.6,
+    0.7, 0.75, 0.8, 0.85,
+    0.9, 0.94, 0.97, 1
   ];
 
   const morphFilters = [
     'brightness(1)', 'brightness(100)',
-    'brightness(100)', 'brightness(100)', 'brightness(100)',
     'brightness(100)', 'brightness(100)', 'brightness(100)', 'brightness(100)',
     'brightness(100)', 'brightness(100)', 'brightness(100)', 'brightness(100)',
     'brightness(100)', 'brightness(100)', 'brightness(100)', 'brightness(100)'
